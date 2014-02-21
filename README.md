@@ -15,7 +15,7 @@ JTSCursorMovement has not yet been tested with right-to-left languages.
 
 Setting up JTSCursorMovement is three lines of code: an import, a strong reference, and a one-line initializer.
 
-```
+```objc
 #import "JTSCursorMovement.h"
 
 @interface BLAViewController () 
