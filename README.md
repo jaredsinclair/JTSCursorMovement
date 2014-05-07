@@ -14,7 +14,7 @@ JTSCursorMovement adds convenient gesture recognizers to a UITextView that make 
 
 ## Usage
 
-Setting up JTSCursorMovement is three lines of code: an import, a strong reference, and a one-line initializer.
+Setting up JTSCursorMovement is easy: an import, a strong reference, and a one-line initializer.
 
 ```objc
 #import "JTSCursorMovement.h"
