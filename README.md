@@ -5,11 +5,12 @@ A drop-in utility for adding convenient swipe gesture cursor movements to a UITe
 
 ## Moving the Cursor
 
-JTSCursorMovement adds convenient gesture recognizers to a UITextView that make it easy to move the cursor forward or backwards. Use one finger to move by characters, two fingers by words, and three fingers by paragraphs. JTSCursorMovement works with both plain text and attributed text, and with composed characters like emoji.
+JTSCursorMovement adds convenient gesture recognizers to a UITextView that make it easy to move the cursor forward or backwards. Use one finger to move by characters, two fingers by words, and three fingers by paragraphs. JTSCursorMovement works with all of the following:
 
-## Known Issues
-
-JTSCursorMovement has not yet been tested with right-to-left languages.
+- plain text
+- attributed text
+- composed characters like emoji.
+- both right-to-left and left-to-right languages
 
 ## Usage
 
