@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "JTSCursorMovement"
-  s.version      = "1.0.0"
+  s.version      = "1.1.0"
   s.summary      = "A drop-in utility for adding convenient swipe gesture cursor movements to a UITextView."
   s.homepage     = "https://github.com/jaredsinclair/JTSCursorMovement"
   s.license      = { :type => 'MIT', :file => 'LICENSE'  }
