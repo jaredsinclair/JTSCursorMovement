@@ -8,56 +8,52 @@
 
 @import UIKit;
 
-///-------------------------------------
-/// JTSCursorSwipeRecognizer
-///-------------------------------------
+@class JTSCursorSwipeRecognizer, JTSCursorPanRecognizer;
 
-/**
- A vanilla subclass of UISwipeGestureRecognizer, JTSCursorSwipeRecognizer allows apps with complex gesture
- recognizer setups to more easily handle potential conflicts as they arise.
- */
-@interface JTSCursorSwipeRecognizer : UISwipeGestureRecognizer
+typedef NS_ENUM(NSInteger, JTSCursorMovementMethod) {
+    JTSCursorMovementMethod_Swiping,
+    JTSCursorMovementMethod_Panning
+};
 
-@end
-
-///-------------------------------------
+///-----------------------------------------------------------------------------
 /// JTSCursorMovement
-///-------------------------------------
+///-----------------------------------------------------------------------------
 
 @interface JTSCursorMovement : NSObject
 
-/**
- The text view passed as the `textView` in the designated initializer.
- */
+/// The text view passed as the `textView` in the designated initializer.
 @property (weak, nonatomic, readonly) UITextView *textView;
 
-/**
- Setting this will enable/disable JTSCursorMovement's gesture recognizers.
- */
+/// Setting this will enable/disable JTSCursorMovement's gesture recognizers.
 @property (assign, nonatomic, readwrite) BOOL enabled;
 
-/**
- Designated initializer. Performs all setup. This method is all you'll usually need to use.
- 
- @param textView JTSCursorMovement keeps a weak reference to this text view.
- 
- @return Returns a fully-prepared cursor movement instance. 
- 
- @note You'll need to maintain a strong reference to a JTSCursorMovement instance.
- 
- */
+/// Legacy initializer.
+/// Defaults to JTSCursorMovementMethod_Swiping.
+/// @param textView JTSCursorMovement keeps a weak reference to this text view.
+/// @return Returns a fully-prepared cursor movement instance.
+/// @note You'll need to maintain a strong reference to a JTSCursorMovement
+/// instance.
 - (instancetype)initWithTextView:(UITextView *)textView;
+
+/// Designated initializer.
+/// @param textView JTSCursorMovement keeps a weak reference to this text view.
+/// @param method Determines whether multi-touch swipes or single-touch pans
+/// are used to control cursor movement.
+/// @return Returns a fully-prepared cursor movement instance.
+/// @note You'll need to maintain a strong reference to a JTSCursorMovement
+/// instance.
+- (instancetype)initWithTextView:(UITextView *)textView
+                          method:(JTSCursorMovementMethod)method;
 
 @end
 
-///-------------------------------------
+///-----------------------------------------------------------------------------
 /// JTSCursorMovement | Gesture Recognizers
-///-------------------------------------
+///-----------------------------------------------------------------------------
 
-/**
- These gesture recognizers are added to the text view during initialization. They are 
- only exposed for those apps that might need to know about them. Handle them with care.
- */
+/// These gesture recognizers are added to the text view during initialization.
+/// They are only exposed for those apps that might need to know about them.
+/// Handle them with care.
 @interface JTSCursorMovement (GestureRecognizers)
 
 @property (strong, nonatomic, readonly) JTSCursorSwipeRecognizer *leftSwipeRecognizer;
@@ -66,8 +62,28 @@
 @property (strong, nonatomic, readonly) JTSCursorSwipeRecognizer *rightSwipeRecognizer_twoFingers;
 @property (strong, nonatomic, readonly) JTSCursorSwipeRecognizer *leftSwipeRecognizer_threeFingers;
 @property (strong, nonatomic, readonly) JTSCursorSwipeRecognizer *rightSwipeRecognizer_threeFingers;
+@property (strong, nonatomic, readonly) JTSCursorPanRecognizer *panRecognizer;
 
 @end
 
+///-----------------------------------------------------------------------------
+/// JTSCursorSwipeRecognizer
+///-----------------------------------------------------------------------------
 
+/// A vanilla subclass of UISwipeGestureRecognizer, JTSCursorSwipeRecognizer
+/// allows apps with complex gesture recognizer setups to more easily handle
+/// potential conflicts as they arise.
+@interface JTSCursorSwipeRecognizer : UISwipeGestureRecognizer
 
+@end
+
+///-----------------------------------------------------------------------------
+/// JTSCursorPanRecognizer
+///-----------------------------------------------------------------------------
+
+/// A vanilla subclass of UIPanGestureRecognizer, JTSCursorPanRecognizer allows
+/// apps with complex gesture recognizer setups to more easily handle potential
+/// conflicts as they arise.
+@interface JTSCursorPanRecognizer : UIPanGestureRecognizer
+
+@end
