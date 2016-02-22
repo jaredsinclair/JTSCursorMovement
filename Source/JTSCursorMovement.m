@@ -168,8 +168,7 @@
                 CGFloat translation = [sender translationInView:sender.view].x;
                 CGFloat velocity = fabs([sender translationInView:sender.view].x);
                 CGFloat delta = translation - prevX;
-                CGFloat sensitivityAdjust = MAX(0.01 * velocity, 1);
-                CGFloat sensitivity = 0.05 * sensitivityAdjust; // bigger == more sensitive
+                CGFloat sensitivity = 0.00015 * powf(velocity, 1.25); // bigger == more sensitive
                 NSInteger characters = roundf(delta * sensitivity);
                 if (labs(characters) > 0) {
                     self.lastPanX = translation;
