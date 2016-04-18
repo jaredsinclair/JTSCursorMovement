@@ -26,6 +26,7 @@
 @property (strong, nonatomic, readwrite) JTSCursorPanRecognizer *panRecognizer;
 @property (nonatomic, assign) CGFloat lastPanX;
 @property (nonatomic, assign) BOOL ignoreThisPanningSession;
+@property (nonatomic, strong) NSDate *dateOfLastPanEvent;
 
 @end
 
@@ -161,17 +162,22 @@
             self.ignoreThisPanningSession = fabs(translation.y) > 0;
             self.textView.panGestureRecognizer.enabled = self.ignoreThisPanningSession;
             self.lastPanX = 0;
+            self.dateOfLastPanEvent = [NSDate date];
         } break;
         case UIGestureRecognizerStateChanged: {
             if (!self.ignoreThisPanningSession) {
+                NSDate *now = [NSDate date];
+                NSDate *previousPan = (self.dateOfLastPanEvent) ? self.dateOfLastPanEvent : now;
+                NSTimeInterval interval = [now timeIntervalSinceDate:previousPan];
                 CGFloat prevX = self.lastPanX;
                 CGFloat translation = [sender translationInView:sender.view].x;
-                CGFloat velocity = fabs([sender translationInView:sender.view].x);
                 CGFloat delta = translation - prevX;
-                CGFloat sensitivity = 0.00015 * powf(velocity, 1.1); 
+                CGFloat customVelocity = fabs(delta) / interval;
+                CGFloat sensitivity = MIN(0.5, customVelocity * 0.00018);
                 NSInteger characters = roundf(delta * sensitivity);
                 if (labs(characters) > 0) {
                     self.lastPanX = translation;
+                    self.dateOfLastPanEvent = now;
                     if ([self currentWritingDirection:self.textView] == UITextWritingDirectionRightToLeft) {
                         [self moveBy:-characters];
                     } else {
@@ -182,6 +188,7 @@
         } break;
         default: {
             self.lastPanX = 0;
+            self.dateOfLastPanEvent = nil;
             self.ignoreThisPanningSession = NO;
             self.textView.panGestureRecognizer.enabled = YES;
         } break;
