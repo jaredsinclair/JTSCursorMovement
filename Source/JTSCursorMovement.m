@@ -156,15 +156,22 @@
 #pragma mark - Pan Actions
 
 - (void)panned:(UIPanGestureRecognizer *)sender {
+    if (!self.textView.isFirstResponder) {
+        return;
+    }
     switch(sender.state) {
         case UIGestureRecognizerStateBegan: {
-            CGPoint translation = [sender translationInView:sender.view];
-            self.ignoreThisPanningSession = fabs(translation.y) > 0;
-            self.textView.panGestureRecognizer.enabled = self.ignoreThisPanningSession;
             self.lastPanX = 0;
             self.dateOfLastPanEvent = [NSDate date];
         } break;
         case UIGestureRecognizerStateChanged: {
+            CGPoint translation = [self.textView.panGestureRecognizer translationInView:sender.view];
+            BOOL isMostlyVertical = YES;
+            if (translation.x != 0) {
+                isMostlyVertical = fabs(translation.y / translation.x) > 0.75;
+            }
+            self.ignoreThisPanningSession = isMostlyVertical || self.textView.isDecelerating;
+            self.textView.panGestureRecognizer.enabled = self.ignoreThisPanningSession;
             if (!self.ignoreThisPanningSession) {
                 NSDate *now = [NSDate date];
                 NSDate *previousPan = (self.dateOfLastPanEvent) ? self.dateOfLastPanEvent : now;
