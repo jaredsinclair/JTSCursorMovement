@@ -270,9 +270,14 @@
     return writingDirection;
 }
 
-- (void)moveBy:(NSInteger)characters {
+- (BOOL)moveBy:(NSInteger)characters {
     NSInteger location = [self indexIfMovedBy:characters];
+    NSInteger currentLocation = self.textView.selectedRange.location;
+    if (location == currentLocation) {
+        return NO;
+    }
     self.textView.selectedRange = NSMakeRange(location, 0);
+    return YES;
 }
 
 - (void)goForwardOneCharacter {

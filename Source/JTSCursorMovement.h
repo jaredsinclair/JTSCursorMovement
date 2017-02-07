@@ -64,7 +64,7 @@ typedef NS_ENUM(NSInteger, JTSCursorMovementMethod) {
 @property (strong, nonatomic, readonly) JTSCursorSwipeRecognizer *rightSwipeRecognizer_threeFingers;
 @property (strong, nonatomic, readonly) JTSCursorPanRecognizer *panRecognizer;
 
-- (void)moveBy:(NSInteger)characters;
+- (BOOL)moveBy:(NSInteger)characters;
 
 @end
 
