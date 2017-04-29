@@ -10,6 +10,8 @@
 
 @class JTSCursorSwipeRecognizer, JTSCursorPanRecognizer;
 
+typedef void (^JTSCursorMovementUpdateBlock)(void);
+
 typedef NS_ENUM(NSInteger, JTSCursorMovementMethod) {
     JTSCursorMovementMethod_Swiping,
     JTSCursorMovementMethod_Panning
@@ -26,6 +28,8 @@ typedef NS_ENUM(NSInteger, JTSCursorMovementMethod) {
 
 /// Setting this will enable/disable JTSCursorMovement's gesture recognizers.
 @property (assign, nonatomic, readwrite) BOOL enabled;
+
+@property (nonatomic, strong) JTSCursorMovementUpdateBlock updateBlock;
 
 /// Legacy initializer.
 /// Defaults to JTSCursorMovementMethod_Swiping.

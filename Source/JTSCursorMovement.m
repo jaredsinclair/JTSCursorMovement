@@ -277,6 +277,9 @@
         return NO;
     }
     self.textView.selectedRange = NSMakeRange(location, 0);
+    if (self.updateBlock != nil) {
+        self.updateBlock();
+    }
     return YES;
 }
 
@@ -285,17 +288,26 @@
     if (selectedRange.location < self.textView.textStorage.string.length) {
         NSInteger location = [self indexOfNextCharacter];
         self.textView.selectedRange = NSMakeRange(location, 0);
+        if (self.updateBlock != nil) {
+            self.updateBlock();
+        }
     }
 }
 
 - (void)goForwardOneWord {
     NSInteger targetIndex = [self indexOfFirstSubsequentSpace];
     self.textView.selectedRange = NSMakeRange(targetIndex, 0);
+    if (self.updateBlock != nil) {
+        self.updateBlock();
+    }
 }
 
 - (void)goForwardOneParagraph {
     NSInteger targetIndex = [self indexOfFirstSubsequentLine];
     self.textView.selectedRange = NSMakeRange(targetIndex, 0);
+    if (self.updateBlock != nil) {
+        self.updateBlock();
+    }
 }
 
 - (void)goBackwardOneCharacter {
@@ -303,17 +315,26 @@
     if (selectedRange.location > 0) {
         NSInteger location = [self indexOfPreviousCharacter];
         self.textView.selectedRange = NSMakeRange(location, 0);
+        if (self.updateBlock != nil) {
+            self.updateBlock();
+        }
     }
 }
 
 - (void)goBackwardOneWord {
     NSInteger targetIndex = [self indexOfFirstPreviousSpace];
     self.textView.selectedRange = NSMakeRange(targetIndex, 0);
+    if (self.updateBlock != nil) {
+        self.updateBlock();
+    }
 }
 
 - (void)goBackwardOneParagraph {
     NSInteger targetIndex = [self indexOfFirstPreviousLine];
     self.textView.selectedRange = NSMakeRange(targetIndex, 0);
+    if (self.updateBlock != nil) {
+        self.updateBlock();
+    }
 }
 
 #pragma mark - Index Logic
