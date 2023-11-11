@@ -185,7 +185,7 @@
                 if (labs(characters) > 0) {
                     self.lastPanX = translation;
                     self.dateOfLastPanEvent = now;
-                    if ([self currentWritingDirection:self.textView] == UITextWritingDirectionRightToLeft) {
+                    if ([self currentWritingDirection:self.textView] == NSWritingDirectionRightToLeft) {
                         [self moveBy:-characters];
                     } else {
                         [self moveBy:characters];
@@ -205,7 +205,7 @@
 #pragma mark - Swipe Actions
 
 - (void)swipedToTheRight:(id)sender {
-    if ([self currentWritingDirection:self.textView] == UITextWritingDirectionRightToLeft) {
+    if ([self currentWritingDirection:self.textView] == NSWritingDirectionRightToLeft) {
         [self goBackwardOneCharacter];
     } else {
         [self goForwardOneCharacter];
@@ -213,7 +213,7 @@
 }
 
 - (void)swipedToTheLeft:(id)sender {
-    if ([self currentWritingDirection:self.textView] == UITextWritingDirectionRightToLeft) {
+    if ([self currentWritingDirection:self.textView] == NSWritingDirectionRightToLeft) {
         [self goForwardOneCharacter];
     } else {
         [self goBackwardOneCharacter];
@@ -221,7 +221,7 @@
 }
 
 - (void)twoFingerSwipedToTheRight:(id)sender {
-    if ([self currentWritingDirection:self.textView] == UITextWritingDirectionRightToLeft) {
+    if ([self currentWritingDirection:self.textView] == NSWritingDirectionRightToLeft) {
         [self goBackwardOneWord];
     } else {
         [self goForwardOneWord];
@@ -229,7 +229,7 @@
 }
 
 - (void)twoFingerSwipedToTheLeft:(id)sender {
-    if ([self currentWritingDirection:self.textView] == UITextWritingDirectionRightToLeft) {
+    if ([self currentWritingDirection:self.textView] == NSWritingDirectionRightToLeft) {
         [self goForwardOneWord];
     } else {
         [self goBackwardOneWord];
@@ -237,7 +237,7 @@
 }
 
 - (void)threeFingerSwipedToTheRight:(id)sender {
-    if ([self currentWritingDirection:self.textView] == UITextWritingDirectionRightToLeft) {
+    if ([self currentWritingDirection:self.textView] == NSWritingDirectionRightToLeft) {
         [self goBackwardOneParagraph];
     } else {
         [self goForwardOneParagraph];
@@ -245,7 +245,7 @@
 }
 
 - (void)threeFingerSwipedToTheLeft:(id)sender {
-    if ([self currentWritingDirection:self.textView] == UITextWritingDirectionRightToLeft) {
+    if ([self currentWritingDirection:self.textView] == NSWritingDirectionRightToLeft) {
         [self goForwardOneParagraph];
     } else {
         [self goBackwardOneParagraph];
@@ -254,15 +254,15 @@
 
 #pragma mark - Direction Logic
 
-- (UITextWritingDirection)currentWritingDirection:(id <UITextInput>)textInputObject {
-    UITextWritingDirection writingDirection;
+- (NSWritingDirection)currentWritingDirection:(id <UITextInput>)textInputObject {
+    NSWritingDirection writingDirection;
     @try {
         writingDirection = [textInputObject
                             baseWritingDirectionForPosition:textInputObject.selectedTextRange.start
                             inDirection:UITextStorageDirectionBackward];
     }
     @catch (NSException *exception) {
-        writingDirection = UITextWritingDirectionLeftToRight;
+        writingDirection = NSWritingDirectionRightToLeft;
     }
     @finally {
         //
